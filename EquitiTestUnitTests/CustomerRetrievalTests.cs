@@ -31,6 +31,18 @@ namespace EquitiTestUnitTests
         }
 
         [Test]
+        public void WhenOrderWithinLastYear_ThenCustomerAddedToHashSet()
+        {
+            OverSeaOrder overSeaOrder = new OverSeaOrder { Customer = TestingData.AllCustomers()[0], OrderItems = TestingData.GetOrderItems(), OrderDateTime = DateTime.Parse("14/12/2021") };
+
+            this.Orders.Add(overSeaOrder);
+
+            HashSet<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToHashSet();
+
+            Assert.AreEqual(1, matchingCustomers.Count);
+        }
+
+        [Test]
         public void WhenOrderNotWithinLastYear_ThenCustomerNotAddedToList()
         {
             OverSeaOrder overSeaOrder = new OverSeaOrder { Customer = TestingData.AllCustomers()[0], OrderItems = TestingData.GetOrderItems(), OrderDateTime = DateTime.Parse("13/12/2021") };

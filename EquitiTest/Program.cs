@@ -28,7 +28,7 @@ namespace EquitiTest
 
             catch (Exception ex)
             {
-                //In reality would be a log. 
+                //In reality this would be a log. 
                 Console.WriteLine(ex.Message.ToString());
             }
         }
