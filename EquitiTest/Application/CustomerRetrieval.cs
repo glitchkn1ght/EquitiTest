@@ -1,12 +1,11 @@
 ﻿using EquitiTest.Interfaces;
 using EquitiTest.Models;
-using System.Security.Cryptography.X509Certificates;
 
 namespace EquitiTest.Application
 {
     public class CustomerRetrieval
     {
-        public IEnumerable<Customer> GetCustomersWithOrders(IEnumerable<IOrder> Orders)
+        public IEnumerable<Customer> GetCustomersWithOrders(IEnumerable<IOrder> orders)
         {
             IEnumerable<Customer> matchingCustomers = new List<Customer>();
 
@@ -14,7 +13,7 @@ namespace EquitiTest.Application
             DateOnly oneYearAgoToday = todaysDate.AddYears(-1);
 
             return (from 
-                        order in Orders
+                        order in orders
                     where 
                         DateOnly.FromDateTime(order.OrderDateTime) >= oneYearAgoToday
                         && order.Customer != null
