@@ -1,5 +1,6 @@
 ﻿using EquitiTest.Interfaces;
 using EquitiTest.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace EquitiTest.Application
 {
@@ -7,23 +8,18 @@ namespace EquitiTest.Application
     {
         public IEnumerable<Customer> GetCustomersWithOrders(IEnumerable<IOrder> Orders)
         {
-            List<Customer> matchingCustomers = new List<Customer>();
+            IEnumerable<Customer> matchingCustomers = new List<Customer>();
 
             DateOnly todaysDate = DateOnly.FromDateTime(DateTime.Now);
             DateOnly oneYearAgoToday = todaysDate.AddYears(-1);
 
-            foreach (IOrder order in Orders)
-            {
-                if (DateOnly.FromDateTime(order.OrderDateTime) >= oneYearAgoToday)
-                {
-                    if (!(order.Customer==null) && !matchingCustomers.Any(x => x.CustomerId == order.Customer.CustomerId))
-                    {
-                        matchingCustomers.Add(order.Customer);
-                    }
-                }
-            }
-
-            return matchingCustomers;
+            return (from 
+                        order in Orders
+                    where 
+                        DateOnly.FromDateTime(order.OrderDateTime) >= oneYearAgoToday
+                        && order.Customer != null
+                    select 
+                        order.Customer).DistinctBy(x => x.CustomerId);
         }
     }
 }

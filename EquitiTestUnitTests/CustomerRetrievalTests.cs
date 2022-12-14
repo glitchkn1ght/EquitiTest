@@ -81,7 +81,7 @@ namespace EquitiTestUnitTests
             OverSeaOrder overSeaOrder = new OverSeaOrder {OrderItems = TestingData.GetOrderItems(), OrderDateTime = DateTime.Parse("15/12/2021") };
             this.Orders.Add(overSeaOrder);
 
-            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList());
+            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList();
 
             Assert.AreEqual(0, matchingCustomers.Count);
         }
