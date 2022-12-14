@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquitiTest", "EquitiTest\EquitiTest.csproj", "{BFA270F9-59FC-4AA1-8B97-FDF1E7ADC3AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquitiTestUnitTests", "EquitiTestUnitTests\EquitiTestUnitTests.csproj", "{BDCCBB69-8FC3-44E3-BEBD-BB8729119238}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFA270F9-59FC-4AA1-8B97-FDF1E7ADC3AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA270F9-59FC-4AA1-8B97-FDF1E7ADC3AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA270F9-59FC-4AA1-8B97-FDF1E7ADC3AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA270F9-59FC-4AA1-8B97-FDF1E7ADC3AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCCBB69-8FC3-44E3-BEBD-BB8729119238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCCBB69-8FC3-44E3-BEBD-BB8729119238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCCBB69-8FC3-44E3-BEBD-BB8729119238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCCBB69-8FC3-44E3-BEBD-BB8729119238}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35D93F4F-F364-4707-9B62-5B8422084EB2}
+	EndGlobalSection
+EndGlobal
