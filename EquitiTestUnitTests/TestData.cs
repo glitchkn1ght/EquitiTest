@@ -23,6 +23,5 @@ namespace EquitiTestUnitTests.TestData
                 new Customer{ CustomerId = 3}
             };
         }
-
     }
 }

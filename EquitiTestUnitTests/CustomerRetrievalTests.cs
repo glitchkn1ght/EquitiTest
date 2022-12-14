@@ -1,16 +1,15 @@
-using EquitiTest;
+using EquitiTest.Application;
 using EquitiTest.Interfaces;
 using EquitiTest.Models;
 using EquitiTestUnitTests.Models;
 using EquitiTestUnitTests.TestData;
 
-
 namespace EquitiTestUnitTests
 {
     public class Tests
     {
-        List<IOrder> Orders = new List<IOrder>();
-        CustomerRetrieval CustomerRetrieval;
+        private List<IOrder> Orders = new List<IOrder>();
+        private CustomerRetrieval CustomerRetrieval;
 
         [SetUp]
         public void Setup()
@@ -26,7 +25,7 @@ namespace EquitiTestUnitTests
 
             this.Orders.Add(overSeaOrder);
 
-            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders);
+            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList();
 
             Assert.AreEqual(1, matchingCustomers.Count);
         }
@@ -38,7 +37,7 @@ namespace EquitiTestUnitTests
 
             this.Orders.Add(overSeaOrder);
 
-            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders);
+            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList();
 
             Assert.AreEqual(0, matchingCustomers.Count);
         }
@@ -52,25 +51,39 @@ namespace EquitiTestUnitTests
             this.Orders.Add(overSeaOrder);
             this.Orders.Add(domesticOrder);
 
-            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders);
+            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList();
 
             Assert.AreEqual(1, matchingCustomers.Count);
         }
 
         [Test]
-        public void WhenCurrentDateIsLeapDay_ThenIncludeOrdersFromExtraDay()
+        public void WhenOrdersEmpty_ThenReturnEmptyList()
         {
-            //E.g include orders from 28th of February of previous year since there won't be a 29th.
-            
-            OverSeaOrder overSeaOrder = new OverSeaOrder { Customer = TestingData.AllCustomers()[0], OrderItems = TestingData.GetOrderItems(), OrderDateTime = DateTime.Parse("15/12/2021") };
-            DomesticOrder domesticOrder = new DomesticOrder { Customer = TestingData.AllCustomers()[0], OrderItems = TestingData.GetOrderItems(), OrderDateTime = DateTime.Parse("16/12/2021") };
+            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList();
 
+            Assert.AreEqual(0, matchingCustomers.Count);
+        }
+
+        [Test]
+        public void WhenOrderdateNull_ThenNoErrorThrown()
+        {
+            OverSeaOrder overSeaOrder = new OverSeaOrder { Customer = TestingData.AllCustomers()[0], OrderItems = TestingData.GetOrderItems()};
             this.Orders.Add(overSeaOrder);
-            this.Orders.Add(domesticOrder);
 
-            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders);
+            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList();
 
-            Assert.AreEqual(1, matchingCustomers.Count);
+            Assert.AreEqual(0, matchingCustomers.Count);
+        }
+
+        [Test]
+        public void WhenOrderCustomerNull_ThenNoErrorThrown()
+        {
+            OverSeaOrder overSeaOrder = new OverSeaOrder {OrderItems = TestingData.GetOrderItems(), OrderDateTime = DateTime.Parse("15/12/2021") };
+            this.Orders.Add(overSeaOrder);
+
+            List<Customer> matchingCustomers = this.CustomerRetrieval.GetCustomersWithOrders(this.Orders).ToList());
+
+            Assert.AreEqual(0, matchingCustomers.Count);
         }
     }
 }

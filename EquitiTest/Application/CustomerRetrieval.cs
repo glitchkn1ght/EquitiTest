@@ -1,46 +1,26 @@
 ﻿using EquitiTest.Interfaces;
 using EquitiTest.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EquitiTest.Application
 {
     public class CustomerRetrieval
     {
-        public IUtility Utility;
-
-        public CustomerRetrieval(IUtility utility)
-        {
-            this.Utility = utility ?? throw new ArgumentNullException(nameof(utility));
-        }
-
-        public List<Customer> GetCustomersWithOrders(IEnumerable<IOrder> Orders)
+        public IEnumerable<Customer> GetCustomersWithOrders(IEnumerable<IOrder> Orders)
         {
             List<Customer> matchingCustomers = new List<Customer>();
 
-            try
-            {
-                DateOnly todaysDate = DateOnly.FromDateTime(DateTime.Now);
-                DateOnly oneYearAgoToday = this.Utility.GetOneYearAgoToday(todaysDate);
+            DateOnly todaysDate = DateOnly.FromDateTime(DateTime.Now);
+            DateOnly oneYearAgoToday = todaysDate.AddYears(-1);
 
-                foreach (IOrder order in Orders)
+            foreach (IOrder order in Orders)
+            {
+                if (DateOnly.FromDateTime(order.OrderDateTime) >= oneYearAgoToday)
                 {
-                    if (order.OrderDateTime != null && DateOnly.FromDateTime((DateTime)order.OrderDateTime) >= oneYearAgoToday)
+                    if (!(order.Customer==null) && !matchingCustomers.Any(x => x.CustomerId == order.Customer.CustomerId))
                     {
-                        if (order.Customer != null && !matchingCustomers.Any(x => x.CustomerId == order.Customer?.CustomerId))
-                        {
-                            matchingCustomers.Add(order.Customer);
-                        }
+                        matchingCustomers.Add(order.Customer);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                //In reality would be a log. 
-                Console.WriteLine(ex.Message.ToString());
             }
 
             return matchingCustomers;
